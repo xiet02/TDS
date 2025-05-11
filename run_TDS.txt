@@ -1,0 +1,31 @@
+##ref: https://microsoft.github.io/graphrag/get_started/
+
+###step 0: install graphRAG
+pip install graphrag
+
+###step 1: make dir
+mkdir -p ./TDS/input
+
+###step 2: prepare reference file(s), example:
+lynx -dump https://pmc.ncbi.nlm.nih.gov/articles/PMC9397469/ >  -o ./TDS/input/input.txt
+...
+###Depending on available omics analysis output, add them to the input folder. Example: 
+### Satey_Score.txt
+
+###step 3: initialize the workspace 
+graphrag init --root ./TDS
+
+#note:# Note: This script will create two files: .env and settings.yaml.
+#Please refer to https://microsoft.github.io/graphrag/get_started/ to set up your own custom settings.
+
+###step 4: Run graphRAG
+graphrag index --root ./TDS
+
+#The duration of this process depends on your input data size, model choice, and text chunk size (configurable in settings.yaml). 
+#After completion, a folder named ./TDS/output will contain parquet files.
+
+###step 5: Query the GraphRAG
+graphrag query \
+--root ./TDS \
+--method global \
+--query "graphrag query --root $(pwd) --method local --query "Evaluate TACSTD2 and MUC1 as Tumor-Associated Antigens in NSCLC; which one is a better ADC/TCE target?"
