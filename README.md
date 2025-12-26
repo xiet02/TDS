@@ -8,3 +8,11 @@ The TAA Discovery System is an innovative framework designed for the identificat
 - **Omics Database Integration**: Facilitates the integration of data from TCGA, GTEx, and other relevant databases for comprehensive analyses.
 - **Safety Score**: Prioritizes TAAs with high tumor selectivity and low on-target/off-tumor risk, ensuring targeted therapy with minimal side effects.
 - **Scalable and Efficient**: Offers a data-agnostic strategy to address attrition challenges in TAA target identification and prioritization.
+
+## Reference & Contact
+For further details on the methodology and findings, please refer to the original paper: AI-powered integration of multi-source data for TAA discovery to accelerate ADC and TCE drug development (I): TAA Target Identification and Prioritization. 
+
+Link: https://www.biorxiv.org/content/10.1101/2025.05.06.652559v1
+
+For any questions about TDS, contact: txie@neoomics.com
+
