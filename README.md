@@ -42,7 +42,7 @@ After target nomination, antibody engineering remains a major bottleneck. TADA p
 
 ### Reference
 For methodology and findings, see:
-[Xie, bioRxiv 2025](https://www.biorxiv.org)
+[Xie, bioRxiv 2026](https://www.biorxiv.org)
 
 ---
 
