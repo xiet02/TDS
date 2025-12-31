@@ -1,49 +1,48 @@
-# Why is "Commit to main" Grayed Out in GitHub Desktop?
+##ref: https://microsoft.github.io/graphrag/get_started/
 
-## Why is "Commit" Grayed Out?
+###step 0: install graphRAG
+pip install graphrag
 
-- **No Changes Staged:**
-  GitHub Desktop only allows committing if there are **staged changes** (files you’ve added, modified, or moved). If files are moved but not saved, or changes aren’t detected, the button will be grayed out.
+###step 1: make dir
+mkdir -p ./TDS/input
 
-- **No Files Selected:**
-  You must **check the boxes** next to the files you want to commit.
+###step 2: prepare reference file(s), example:
+lynx -dump https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/PMC10290806/unicode
+lynx -dump https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/PMC10251928/unicode 
+...
+###Depending on available omics analysis output, add them to the input folder. Example: 
+### Safety_Score.txt #This data provides the core 0-28 safety metrics used for target prioritization.
+### Convert the Safety_Scores.txt to JSON format for any 'text' fields, skipping noise sections
 
-- **Empty Commit Message:**
-  GitHub Desktop requires a commit message, even if it’s brief.
+###step 3: initialize the workspace 
+graphrag init --root ./TDS
+#note:# Note: This script will create two files: .env and settings.yaml.
+#Please refer to https://microsoft.github.io/graphrag/get_started/ to set up your own custom settings.
 
-- **Git Ignored Files:**
-  Files listed in `.gitignore` won’t appear as changes.
+### Customizing Settings: Refer to the Get Started guide to configure the settings.yaml. For the TAA project, 
+ensure the following prompt files are customized in the prompts/ directory:
+  #local_search_system_prompt.txt: Tuned for Oncology Target Discovery.
+  #extract_claims.txt: Configured to capture "Quantitative Assertions" like p-values and safety scores.
+  #question_gen_system_prompt.txt: Updated to generate technical research questions for target triage.
 
----
+###step 4: Run graphRAG
+graphrag index --root ./TDS
 
-## How to Fix It
+#After completion, your indexing artifacts will be stored in parquet files within ./TDS/output.
+#The duration of this process depends on your input data size, model choice, and text chunk size (configurable in settings.yaml). 
 
-### 1. Check for Unsaved Changes
-- Save all files in your file explorer.
-- In GitHub Desktop, go to the **"Repository"** menu and select **"Refresh"** (or press `F5`).
+###step 5: Query the GraphRAG
+Use natural language queries to evaluate targets based on validity, safety profiles, and therapeutic suitability.
+##Local Search (Comparative Target Evaluation):
+Bash
+graphrag query \
+--root ./TDS \
+--method local \
+--query "Evaluate TACSTD2 and MUC1 as Tumor-Associated Antigens in NSCLC; which one is a better ADC/TCE target?"
 
-### 2. Select Files to Commit
-- In the **"Changes"** tab, check the boxes next to the files or folders you want to commit.
-- If changes don’t appear, ensure they were saved or moved correctly.
-
-### 3. Add a Commit Message
-- Enter a message in the **"Summary"** field (e.g., *"Move files to part2_antibody_design"*).
-
-### 4. Check for Ignored Files
-- Open `.gitignore` in your repository and confirm your files/folders aren’t listed.
-
-### 5. Restart GitHub Desktop
-- Closing and reopening the app can resolve temporary issues.
-
-### 6. Check for Errors
-- Look for error messages at the top of the GitHub Desktop window.
-
----
-
-## Still Stuck?
-
-### Manually Stage Files
-Open a terminal in your repository and run:
-```bash
-git add .
-git status
+##Global Search (Thematic Dataset Synthesis):
+Bash
+graphrag query \
+--root ./TDS \
+--method global \
+--query "Summarize the overarching safety risks for major TAAs across the clinical literature in this dataset."
