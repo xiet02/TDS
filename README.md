@@ -25,7 +25,7 @@ The TAA Discovery System is an innovative framework for identifying and prioriti
 
 ### Reference
 For methodology and findings, see:
-[Xie & Huang, bioRxiv 2025](https://www.biorxiv.org/content/10.1101/2025.05.06.652559v1)
+[Xie & Hung,bioRxiv 2025](https://www.biorxiv.org/content/10.1101/2025.05.06.652559v1)
 
 ---
 
@@ -42,7 +42,8 @@ After target nomination, antibody engineering remains a major bottleneck. TADA p
 
 ### Reference
 For methodology and findings, see:
-[Xie, bioRxiv 2025, in preparation]
+[Xie, bioRxiv 2025](https://www.biorxiv.org)
+
 ---
 
 ## Reference & Contact
